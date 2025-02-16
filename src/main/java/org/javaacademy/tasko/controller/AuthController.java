@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.javaacademy.tasko.dto.auth.LoginRequest;
 import org.javaacademy.tasko.dto.auth.RegisterRequest;
 import org.javaacademy.tasko.service.AuthService;
-import org.javaacademy.tasko.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -31,8 +33,10 @@ public class Subtask {
     @ManyToOne(fetch = FetchType.LAZY)
     private TaskStatus taskStatus;
 
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
-    private LocalDateTime updated_at;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
 }
