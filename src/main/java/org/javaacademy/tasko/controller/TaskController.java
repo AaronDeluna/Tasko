@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TaskController {
 
     @PostMapping
-    public ResponseEntity<CreateTaskDtoRes> crate(@RequestHeader("Authorization") String token,
-                                                  @RequestBody CreateTaskDto createTaskDto) {
+    public ResponseEntity<CreateTaskDtoRes> crate(@RequestBody CreateTaskDto createTaskDto) {
 
         return ResponseEntity.ok().build();
     }

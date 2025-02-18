@@ -40,7 +40,7 @@ public class Task {
     private PriorityType priority;
 
     @ManyToOne
-    @JoinColumn(name = "column_id", nullable = false)
+    @JoinColumn(name = "columns_id", nullable = false)
     private TaskColumn taskColumn;
 
     @Column(nullable = false)

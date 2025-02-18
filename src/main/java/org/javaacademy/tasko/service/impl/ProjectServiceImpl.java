@@ -14,7 +14,6 @@ import org.javaacademy.tasko.repository.UserRepository;
 import org.javaacademy.tasko.service.ProjectService;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
@@ -38,6 +37,13 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<ProjectDto> findAll(Integer userId) {
         return projectMapper.toDtoList(projectRepository.findAllByUserId(userId).orElse(emptyList()));
+    }
+
+    @Override
+    public ProjectDto findById(Integer userid, Integer id) {
+        return projectRepository.findByIdAndUserId(id, userid).orElseThrow(
+                () -> new NotFoundException("Проект с id: %s не найден")
+        );
     }
 
     @Override

@@ -43,7 +43,7 @@
             </column>
         </createTable>
         
-        <createTable tableName="column">
+        <createTable tableName="columns">
             <column name="id" type="serial">
                 <constraints primaryKey="true" primaryKeyName="pk_column_id"/>
             </column>
@@ -74,7 +74,7 @@
             <column name="column_id" type="int">
                 <constraints nullable="false"
                              referencedColumnNames="id"
-                             referencedTableName="column"
+                             referencedTableName="columns"
                              foreignKeyName="fk_column_id"/>
             </column>
             <column name="position" type="int">

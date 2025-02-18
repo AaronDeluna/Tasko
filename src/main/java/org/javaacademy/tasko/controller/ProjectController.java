@@ -40,6 +40,13 @@ public class ProjectController {
         return ResponseEntity.ok().body(projectService.findAll(userDto.getId()));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ProjectDto> gitById(@RequestHeader("Authorization") String token,
+                                              @PathVariable Integer id) {
+        UserDto userDto = JwtUtil.parseToken(token);
+        return ResponseEntity.ok().body(projectService.findById(userDto.getId(), id));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteById(@RequestHeader("Authorization") String token,
                                                  @PathVariable Integer id) {

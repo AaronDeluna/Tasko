@@ -9,6 +9,7 @@ import java.util.List;
 public interface ProjectService {
     CreateProjectDtoRes create(Integer userid, CreateProjectDto createProjectDto);
     List<ProjectDto> findAll(Integer userId);
+    ProjectDto findById(Integer userid, Integer id);
     ProjectDto updateById(Integer id);
     void deleteById(Integer userId, Integer id);
 }
