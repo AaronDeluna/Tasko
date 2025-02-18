@@ -17,6 +17,14 @@ public class UserMapper {
         );
     }
 
+    public User toEntity(UserDto dto) {
+        return new User(
+                dto.getUsername(),
+                dto.getEmail(),
+                dto.getPassword()
+        );
+    }
+
     public UserDto toDto(User entity) {
         return UserDto.builder()
                 .id(entity.getId())

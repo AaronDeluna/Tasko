@@ -43,4 +43,8 @@ public class Project {
         this.createAt = LocalDateTime.now();
     }
 
+    public Project(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 }

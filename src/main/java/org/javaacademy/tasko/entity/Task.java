@@ -54,4 +54,11 @@ public class Task {
         this.createAt = LocalDateTime.now();
     }
 
+    public Task(String title, String description, Date dueDate, PriorityType priority, Integer position) {
+        this.title = title;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.priority = priority;
+        this.position = position;
+    }
 }
