@@ -17,7 +17,7 @@ spring:
 
 
 jwt:
-  token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhYXJvbkBtYWlsLnJ1In0.0x
+  token: Y2FzZXRoaXNzZWNyZXRmb3JleGFtcGxlYmFzZTY0
 
 logging:
   level:

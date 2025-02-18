@@ -2,8 +2,6 @@ package org.javaacademy.tasko.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,35 +14,26 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Task {
+public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)
-    private String title;
+    private String name;
 
     private String description;
 
-    private Date dueDate;
-
-    @Enumerated(EnumType.STRING)
-    private PriorityType priority;
-
     @ManyToOne
-    @JoinColumn(name = "column_id", nullable = false)
-    private TaskColumn taskColumn;
-
-    @Column(nullable = false)
-    private Integer position;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createAt;
