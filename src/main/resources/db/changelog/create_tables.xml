@@ -32,32 +32,32 @@
                 <constraints nullable="false"/>
             </column>
             <column name="description" type="text"/>
-            <column name="user_id" type="int">
-                <constraints nullable="false"
-                             referencedColumnNames="id"
-                             referencedTableName="users"
-                             foreignKeyName="fk_user_id"/>
-            </column>
             <column name="create_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
+            <column name="user_id" type="int">
+                <constraints nullable="false"
+                             referencedTableName="users"
+                             referencedColumnNames="id"
+                             foreignKeyName="project_users_fk"/>
+            </column>
         </createTable>
         
-        <createTable tableName="columns">
+        <createTable tableName="container">
             <column name="id" type="serial">
-                <constraints primaryKey="true" primaryKeyName="pk_column_id"/>
+                <constraints primaryKey="true" primaryKeyName="pk_container_id"/>
             </column>
             <column name="name" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="project_id" type="int">
-                <constraints nullable="false"
-                             referencedColumnNames="id"
-                             referencedTableName="project"
-                             foreignKeyName="fk_project_id"/>
-            </column>
             <column name="position" type="int">
                 <constraints nullable="false"/>
+            </column>
+            <column name="project_id" type="int">
+                <constraints nullable="false"
+                             referencedTableName="project"
+                             referencedColumnNames="id"
+                             foreignKeyName="container_project_fk"/>
             </column>
         </createTable>
 
@@ -69,18 +69,14 @@
                 <constraints nullable="false"/>
             </column>
             <column name="description" type="text"/>
-            <column name="due_date" type="DATE"/>
+            <column name="deadline" type="DATE"/>
             <column name="priority" type="varchar(30)"/>
-            <column name="column_id" type="int">
-                <constraints nullable="false"
-                             referencedColumnNames="id"
-                             referencedTableName="columns"
-                             foreignKeyName="fk_column_id"/>
-            </column>
-            <column name="position" type="int">
-                <constraints nullable="false"/>
-            </column>
             <column name="create_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="container_id" type="int">
+                <constraints referencedTableName="container"
+                             referencedColumnNames="id"
+                             foreignKeyName="task_container_fk"/>
+            </column>
         </createTable>
     </changeSet>
 

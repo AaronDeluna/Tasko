@@ -1,6 +1,5 @@
 package org.javaacademy.tasko.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,7 +8,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,8 +20,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "columns")
-public class TaskColumn {
+public class Container {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,18 +29,14 @@ public class TaskColumn {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
+    private String position;
+
     @ManyToOne
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
-    @Column(nullable = false)
-    private Integer position;
-
-    @OneToMany(mappedBy = "taskColumn", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "container")
     private List<Task> tasks;
 
-    public TaskColumn(String name, Integer position) {
-        this.name = name;
-        this.position = position;
-    }
 }

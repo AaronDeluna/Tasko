@@ -34,31 +34,21 @@ public class Task {
 
     private String description;
 
-    private Date dueDate;
+    private Date deadline;
 
     @Enumerated(EnumType.STRING)
     private PriorityType priority;
 
-    @ManyToOne
-    @JoinColumn(name = "columns_id", nullable = false)
-    private TaskColumn taskColumn;
-
-    @Column(nullable = false)
-    private Integer position;
-
-    @Column(nullable = false, updatable = false)
+    @Column(name = "create_at", updatable = false)
     private LocalDateTime createAt;
 
+    @ManyToOne
+    @JoinColumn(name = "container_id", nullable = false)
+    private Container container;
+
     @PrePersist
-    protected void noCreate() {
+    protected void initCreateTime() {
         this.createAt = LocalDateTime.now();
     }
 
-    public Task(String title, String description, Date dueDate, PriorityType priority, Integer position) {
-        this.title = title;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.priority = priority;
-        this.position = position;
-    }
 }

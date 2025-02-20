@@ -14,17 +14,3 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
-
-jwt:
-  token: Y2FzZXRoaXNzZWNyZXRmb3JleGFtcGxlYmFzZTY0
-
-logging:
-  level:
-    org:
-      hibernate:
-        orm:
-          jdbc:
-            bind: TRACE
-
-

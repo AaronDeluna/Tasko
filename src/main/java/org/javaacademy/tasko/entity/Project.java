@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -31,20 +33,19 @@ public class Project {
 
     private String description;
 
+    @Column(name = "create_at", nullable = false, updatable = false)
+    private LocalDateTime createAt;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createAt;
+    @OneToMany(mappedBy = "project")
+    private List<Container> containers;
 
     @PrePersist
-    protected void noCreate() {
+    protected void initCreateTime() {
         this.createAt = LocalDateTime.now();
     }
 
-    public Project(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
 }
