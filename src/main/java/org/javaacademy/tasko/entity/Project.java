@@ -10,9 +10,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Project {
@@ -41,7 +44,14 @@ public class Project {
     private User user;
 
     @OneToMany(mappedBy = "project")
+    @ToString.Exclude
     private List<Container> containers;
+
+    public Project(String name, String description, User user) {
+        this.name = name;
+        this.description = description;
+        this.user = user;
+    }
 
     @PrePersist
     protected void initCreateTime() {

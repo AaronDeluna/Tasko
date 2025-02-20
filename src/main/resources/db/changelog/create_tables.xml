@@ -78,6 +78,24 @@
                              foreignKeyName="task_container_fk"/>
             </column>
         </createTable>
+
+        <createTable tableName="active_tokens">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" primaryKeyName="pr_active_tokens_id"/>
+            </column>
+            <column name="user_id" type="int">
+                <constraints nullable="false"
+                             referencedTableName="users"
+                             referencedColumnNames="id"
+                             foreignKeyName="active_tokens_users_id"/>
+            </column>
+            <column name="token" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expires_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
     </changeSet>
 
 </databaseChangeLog>
