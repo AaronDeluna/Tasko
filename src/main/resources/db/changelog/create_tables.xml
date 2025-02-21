@@ -5,179 +5,97 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
 
-    <!-- Create roles table first -->
-    <changeSet id="202502152053" author="IvanM">
-        <createTable tableName="roles">
-            <column name="id" type="serial">
-                <constraints primaryKey="true" primaryKeyName="pk_roles_id"/>
-            </column>
-            <column name="name" type="VARCHAR(50)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-
-    <!-- Create task_status table -->
-    <changeSet id="202502152104" author="IvanM">
-        <createTable tableName="task_status">
-            <column name="id" type="serial">
-                <constraints primaryKey="true" primaryKeyName="pk_task_status_id"/>
-            </column>
-            <column name="name" type="VARCHAR(50)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-
-    <!-- Create categories table after task_status table -->
-    <changeSet id="202502152111" author="IvanM">
-        <createTable tableName="categories">
-            <column name="id" type="serial">
-                <constraints primaryKey="true" primaryKeyName="pk_categories_id"/>
-            </column>
-            <column name="name" type="VARCHAR(100)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-
-    <!-- Create users table and add foreign key to roles table -->
-    <changeSet id="202502152041" author="IvanM">
+    <changeSet id="202502181017" author="Ivan">
         <createTable tableName="users">
             <column name="id" type="serial">
-                <constraints primaryKey="true" primaryKeyName="pk_users_id"/>
+                <constraints primaryKey="true" primaryKeyName="pk_user_id"/>
             </column>
-            <column name="username" type="VARCHAR(255)">
+            <column name="username" type="varchar(100)">
                 <constraints nullable="false"/>
             </column>
-            <column name="email" type="VARCHAR(255)">
+            <column name="email" type="varchar(100)">
                 <constraints nullable="false" unique="true"/>
             </column>
-            <column name="password" type="VARCHAR(255)">
+            <column name="password" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="role_id" type="int">
+            <column name="create_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
-            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
-            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
         </createTable>
-        <addForeignKeyConstraint
-                baseTableName="users"
-                baseColumnNames="role_id"
-                referencedTableName="roles"
-                referencedColumnNames="id"
-                constraintName="fk_users_role"/>
-    </changeSet>
-
-    <!-- Create tasks table and add foreign key constraints to users, task_status, and categories tables -->
-    <changeSet id="202502152056" author="IvanM">
-        <createTable tableName="tasks">
+        
+        <createTable tableName="project">
             <column name="id" type="serial">
-                <constraints primaryKey="true" primaryKeyName="pk_tasks_id"/>
+                <constraints primaryKey="true" primaryKeyName="pk_project_id"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="text"/>
+            <column name="create_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
             </column>
             <column name="user_id" type="int">
+                <constraints nullable="false"
+                             referencedTableName="users"
+                             referencedColumnNames="id"
+                             foreignKeyName="project_users_fk"/>
+            </column>
+        </createTable>
+        
+        <createTable tableName="container">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" primaryKeyName="pk_container_id"/>
+            </column>
+            <column name="name" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="title" type="VARCHAR(255)">
+            <column name="position" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="project_id" type="int">
+                <constraints nullable="false"
+                             referencedTableName="project"
+                             referencedColumnNames="id"
+                             foreignKeyName="container_project_fk"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="task">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" primaryKeyName="pk_task_id"/>
+            </column>
+            <column name="title" type="varchar(100)">
                 <constraints nullable="false"/>
             </column>
             <column name="description" type="text"/>
-            <column name="deadline" type="TIMESTAMP"/>
-            <column name="status_id" type="int">
-                <constraints nullable="false"/>
+            <column name="deadline" type="DATE"/>
+            <column name="priority" type="varchar(30)"/>
+            <column name="create_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="container_id" type="int">
+                <constraints referencedTableName="container"
+                             referencedColumnNames="id"
+                             foreignKeyName="task_container_fk"/>
             </column>
-            <column name="category_id" type="int"/>
-            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
-            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
         </createTable>
-        <addForeignKeyConstraint
-                baseTableName="tasks"
-                baseColumnNames="user_id"
-                referencedTableName="users"
-                referencedColumnNames="id"
-                constraintName="fk_tasks_user"/>
-        <addForeignKeyConstraint
-                baseTableName="tasks"
-                baseColumnNames="status_id"
-                referencedTableName="task_status"
-                referencedColumnNames="id"
-                constraintName="fk_tasks_status"/>
-        <addForeignKeyConstraint
-                baseTableName="tasks"
-                baseColumnNames="category_id"
-                referencedTableName="categories"
-                referencedColumnNames="id"
-                constraintName="fk_tasks_category"/>
-    </changeSet>
 
-    <!-- Create subtasks table and add foreign key constraints to tasks and task_status tables -->
-    <changeSet id="202502152106" author="IvanM">
-        <createTable tableName="subtasks">
+        <createTable tableName="active_tokens">
             <column name="id" type="serial">
-                <constraints primaryKey="true" primaryKeyName="pk_subtasks_id"/>
+                <constraints primaryKey="true" primaryKeyName="pr_active_tokens_id"/>
             </column>
-            <column name="task_id" type="int">
+            <column name="user_id" type="int">
+                <constraints nullable="false"
+                             referencedTableName="users"
+                             referencedColumnNames="id"
+                             foreignKeyName="active_tokens_users_id"/>
+            </column>
+            <column name="token" type="text">
                 <constraints nullable="false"/>
             </column>
-            <column name="title" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="description" type="text"/>
-            <column name="status_id" type="int">
-                <constraints nullable="false"/>
-            </column>
-            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
-            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
-        </createTable>
-        <addForeignKeyConstraint
-                baseTableName="subtasks"
-                baseColumnNames="task_id"
-                referencedTableName="tasks"
-                referencedColumnNames="id"
-                constraintName="fk_subtasks_task"/>
-        <addForeignKeyConstraint
-                baseTableName="subtasks"
-                baseColumnNames="status_id"
-                referencedTableName="task_status"
-                referencedColumnNames="id"
-                constraintName="fk_subtasks_status"/>
-    </changeSet>
-
-    <!-- Create tags table -->
-    <changeSet id="202502152112" author="IvanM">
-        <createTable tableName="tags">
-            <column name="id" type="serial">
-                <constraints primaryKey="true" primaryKeyName="pk_tags_id"/>
-            </column>
-            <column name="name" type="VARCHAR(100)">
+            <column name="expires_at" type="TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
         </createTable>
-    </changeSet>
-
-    <!-- Create task_tags table and add foreign key constraints to tasks and tags tables -->
-    <changeSet id="202502152113" author="IvanM">
-        <createTable tableName="task_tags">
-            <column name="task_id" type="int">
-                <constraints nullable="false"/>
-            </column>
-            <column name="tag_id" type="int">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-        <addForeignKeyConstraint
-                baseTableName="task_tags"
-                baseColumnNames="task_id"
-                referencedTableName="tasks"
-                referencedColumnNames="id"
-                constraintName="fk_task_tags_task"/>
-        <addForeignKeyConstraint
-                baseTableName="task_tags"
-                baseColumnNames="tag_id"
-                referencedTableName="tags"
-                referencedColumnNames="id"
-                constraintName="fk_task_tags_tag"/>
     </changeSet>
 
 </databaseChangeLog>

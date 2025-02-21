@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/tasko_db
+    url: jdbc:postgresql://localhost:5432/tasko_db
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
@@ -14,12 +14,3 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
-logging:
-  level:
-    org:
-      hibernate:
-        orm:
-          jdbc:
-            bind: TRACE
-
