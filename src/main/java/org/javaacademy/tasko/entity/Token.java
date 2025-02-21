@@ -36,7 +36,7 @@ public class Token {
     @Column(nullable = false)
     private String token;
 
-    @Column(name = "expires_at",nullable = false)
+    @Column(name = "expires_at", nullable = false)
     private LocalDateTime expiresAt;
 
     public Token(User user, String token, LocalDateTime expiresAt) {

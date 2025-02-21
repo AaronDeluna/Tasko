@@ -47,12 +47,6 @@ public class Project {
     @ToString.Exclude
     private List<Container> containers;
 
-    public Project(String name, String description, User user) {
-        this.name = name;
-        this.description = description;
-        this.user = user;
-    }
-
     @PrePersist
     protected void initCreateTime() {
         this.createAt = LocalDateTime.now();

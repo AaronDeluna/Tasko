@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.javaacademy.tasko.dto.project.CreateProjectDto;
 import org.javaacademy.tasko.dto.project.CreateProjectDtoRes;
 import org.javaacademy.tasko.dto.project.ProjectDto;
-import org.javaacademy.tasko.dto.user.UserDtoRes;
 import org.javaacademy.tasko.entity.Project;
 import org.javaacademy.tasko.entity.User;
 import org.javaacademy.tasko.exception.NotFoundException;
